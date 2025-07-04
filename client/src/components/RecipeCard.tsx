@@ -1,4 +1,4 @@
-import { Card, CardFooter, CardHeader, Chip, Image } from '@heroui/react';
+import { Card, CardFooter, CardHeader, Chip, Image, Link } from '@heroui/react';
 import { useNavigate } from 'react-router-dom';
 
 interface RecipeItem {
@@ -21,38 +21,53 @@ export default function RecipeCard({ item, random }: RecipeCardProps) {
     <Card
       isFooterBlurred
       isPressable
-      className="w-full h-[300px]"
+      className="w-full h-[350px]"
       onPress={() => {
         navigate(`/recipe/${item?.idMeal}`);
       }}
     >
       {random && (
-        <CardHeader className="absolute z-10 top-1 flex-row gap-2 items-start">
-          <Chip color="secondary" radius="sm" size="sm" variant="shadow">
-            {item?.strArea}
-          </Chip>
-          <Chip color="secondary" radius="sm" size="sm" variant="shadow">
-            {item?.strCategory}
-          </Chip>
+        <CardHeader className="absolute z-10 top-1 flex-row gap-2 justify-end">
+          <Link href={`browse/cuisine/${item?.strArea}`}>
+            <Chip
+              classNames={{
+                base: 'hover:bg-primary transition dark:text-white'
+              }}
+              color="secondary"
+              radius="sm"
+              size="sm"
+            >
+              {item?.strArea}
+            </Chip>
+          </Link>
+          <Link href={`browse/cuisine/${item?.strCategory}`}>
+            <Chip
+              classNames={{
+                base: 'hover:bg-primary transition dark:text-white'
+              }}
+              color="secondary"
+              radius="sm"
+              size="sm"
+            >
+              {item?.strCategory}
+            </Chip>
+          </Link>
         </CardHeader>
       )}
       <Image
         removeWrapper
-        alt="Card example background"
+        alt={item?.strMeal}
         className="z-0 w-full h-full scale-125 -translate-y-6 object-cover"
         src={`${item?.strMealThumb}/large`}
       />
       {random ? (
-        <CardFooter className="absolute bg-white/30 bottom-0 border-t-1 border-zinc-100/50 z-10 justify-between">
+        <CardFooter className="absolute bg-white/50 dark:bg-black/50 bottom-0 border-t-1 border-zinc-100/50 dark:border-zinc-600/50 z-10 justify-between">
           <div>
-            <p className="text-sm m-2">Discover a random recipe every time!</p>
-            <h4 className="font-medium text-left text-xl m-2">
-              {item?.strMeal}
-            </h4>
+            <p className="text-sm text-left">
+              Discover a random recipe every time!
+            </p>
+            <h4 className="font-medium text-left text-xl">{item?.strMeal}</h4>
           </div>
-          <Chip color="primary" radius="sm" size="sm" variant="shadow">
-            Discover Recipe
-          </Chip>
         </CardFooter>
       ) : (
         <CardFooter className="absolute bg-white/30 bottom-0 border-t-1 border-zinc-100/50 z-10 justify-center">

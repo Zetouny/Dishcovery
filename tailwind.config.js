@@ -11,6 +11,10 @@ export default {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        heading: ['Caveat', 'cursive'],
+        body: ['Montserrat', 'sans-serif']
+      },
       keyframes: {
         gradient: {
           '0%': { backgroundPosition: '0% 50%' },
@@ -28,7 +32,7 @@ export default {
       }
     }
   },
-  darkMode: ['class', 'class'],
+  darkMode: 'class',
   plugins: [
     heroui({
       themes: {

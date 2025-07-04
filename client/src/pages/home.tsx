@@ -15,7 +15,7 @@ import DefaultLayout from '@/layouts/default';
 import useFetch from '@/hooks/useFetch';
 import { Recipe } from '@/types/recipe';
 import RecipeCard from '@/components/RecipeCard';
-import { SearchIcon } from '@/components/icons';
+import GradientText from '@/components/GradientText';
 
 type Categories = {
   categories: {
@@ -50,13 +50,13 @@ export default function HomePage() {
 
   return (
     <DefaultLayout>
-      <section className="flex flex-col md:flex-row justify-between items-center gap-4">
-        <div className="text-center md:text-left basis-full">
+      <section className="flex flex-col lg:flex-row justify-between items-center gap-10">
+        <div className="flex flex-col justify-between text-center lg:text-left basis-3/5 gap-2 ">
           <h1 className="text-5xl">
-            Welcome to <span className="font-bold">Dishcovery</span>
+            Welcome to <GradientText>Dishcovery</GradientText>
           </h1>
-          <p className="text-2xl mt-2">Bringing the World to Your Table.</p>
-          <p className="mt-7">
+          <p className="text-2xl">Bringing the World to Your Table.</p>
+          <p className="">
             Discover, save, and share incredible recipes with a vibrant
             food-loving community. Whether you’re an adventurous home chef or
             just looking for dinner inspiration, Dishcovery helps you explore
@@ -72,7 +72,6 @@ export default function HomePage() {
             label="Search for a recipe"
             placeholder="Try 'spaghetti', 'salad', or 'brownies'..."
             size="lg"
-            startContent={<SearchIcon className="mb-0.5" />}
             variant="faded"
             onInputChange={setRecipeSearch}
             onSelectionChange={(key) => navigate(`/recipe/${key}`)}
@@ -92,9 +91,11 @@ export default function HomePage() {
                       src={`${item.strMealThumb}/small`}
                     />
                     <div className="flex flex-col">
-                      <span className="text-small">{item.strMeal}</span>
-                      <span className="text-tiny text-default-400">
-                        {item.strArea}
+                      <span className="text-small text-primary">
+                        {item.strMeal}
+                      </span>
+                      <span className="text-tiny text-default-700">
+                        {item.strArea}, {item.strCategory}
                       </span>
                     </div>
                   </div>
@@ -104,7 +105,7 @@ export default function HomePage() {
           </Autocomplete>
         </div>
 
-        <div className="w-full basis-full">
+        <div className="w-full basis-2/5">
           {randomRecipe && (
             <RecipeCard
               key={randomRecipe.idMeal}
@@ -116,26 +117,27 @@ export default function HomePage() {
       </section>
 
       <section className="mt-10">
-        <h2 className="text-2xl text-center md:text-left">
+        <h2 className="text-2xl text-center lg:text-left text-primary">
           Discover our recipes by category:
         </h2>
         <Divider className="my-4" />
-        <div className="gap-2 grid grid-cols-2 md:grid-cols-4">
+        <div className="gap-2 grid grid-cols-2 lg:grid-cols-4">
           {recipeCategories?.map((item) => (
             <Card
               key={item.idCategory}
               isFooterBlurred
               isHoverable
-              className="border-none p-5"
+              className="p-5"
+              classNames={{
+                base: 'data-[hover=true]:bg-primary/20 dark:data-[hover=true]:bg-primary/20'
+              }}
               isPressable={true}
               onPress={() => navigate(`/browse/category/${item.strCategory}`)}
             >
               <Image
                 alt={item.strCategory}
-                className="object-cover"
-                radius="lg"
+                radius="sm"
                 src={item.strCategoryThumb}
-                width="100%"
               />
               <CardFooter className="justify-center before:bg-white/10 border-white/20 border-1 overflow-hidden absolute before:rounded-xl rounded-small bottom-5 w-[calc(100%-2.5rem)] shadow-small p-1 z-10">
                 <p className="text-medium font-bold">{item.strCategory}</p>
@@ -146,14 +148,15 @@ export default function HomePage() {
       </section>
 
       <section className="mt-10">
-        <h2 className="text-2xl text-center md:text-left">
+        <h2 className="text-2xl text-center lg:text-left text-primary">
           Discover our recipes by cuisine:
         </h2>
         <Divider className="my-4" />
-        <div className="gap-2 grid grid-cols-3 md:grid-cols-6">
+        <div className="gap-2 grid grid-cols-3 lg:grid-cols-6">
           {recipeCuisine?.map((item) => (
             <Button
               key={item.strArea}
+              className="data-[hover=true]:bg-primary-500"
               variant="ghost"
               onPress={() => navigate(`./browse/cuisine/${item.strArea}`)}
             >
