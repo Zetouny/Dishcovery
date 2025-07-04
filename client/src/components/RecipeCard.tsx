@@ -21,7 +21,7 @@ export default function RecipeCard({ item, random }: RecipeCardProps) {
     <Card
       isFooterBlurred
       isPressable
-      className="w-full h-[350px]"
+      className="w-full max-h-[350px]"
       onPress={() => {
         navigate(`/recipe/${item?.idMeal}`);
       }}
@@ -40,7 +40,7 @@ export default function RecipeCard({ item, random }: RecipeCardProps) {
               {item?.strArea}
             </Chip>
           </Link>
-          <Link href={`browse/cuisine/${item?.strCategory}`}>
+          <Link href={`browse/category/${item?.strCategory}`}>
             <Chip
               classNames={{
                 base: 'hover:bg-primary transition dark:text-white'
@@ -70,7 +70,7 @@ export default function RecipeCard({ item, random }: RecipeCardProps) {
           </div>
         </CardFooter>
       ) : (
-        <CardFooter className="absolute bg-white/30 bottom-0 border-t-1 border-zinc-100/50 z-10 justify-center">
+        <CardFooter className="absolute bg-white/50 dark:bg-black/50 bottom-0 border-t-1 border-zinc-100/50 dark:border-zinc-600/50 z-10 justify-center">
           <h4 className="font-medium m-1 truncate">{item?.strMeal}</h4>
         </CardFooter>
       )}
