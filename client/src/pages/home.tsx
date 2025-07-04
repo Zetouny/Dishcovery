@@ -120,7 +120,7 @@ export default function HomePage() {
         <h2 className="text-2xl text-center lg:text-left text-primary">
           Discover our recipes by category:
         </h2>
-        <Divider className="my-4" />
+        <Divider className="mt-3 mb-6" />
         <div className="gap-2 grid grid-cols-2 lg:grid-cols-4">
           {recipeCategories?.map((item) => (
             <Card
@@ -151,7 +151,7 @@ export default function HomePage() {
         <h2 className="text-2xl text-center lg:text-left text-primary">
           Discover our recipes by cuisine:
         </h2>
-        <Divider className="my-4" />
+        <Divider className="mt-3 mb-6" />
         <div className="gap-2 grid grid-cols-3 lg:grid-cols-6">
           {recipeCuisine?.map((item) => (
             <Button

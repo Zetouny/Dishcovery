@@ -1,5 +1,5 @@
-import { useParams } from 'react-router-dom';
-import { Card, CardBody, Chip, Divider, Image } from '@heroui/react';
+import { useNavigate, useParams } from 'react-router-dom';
+import { Card, CardBody, Chip, Divider, Image, Link } from '@heroui/react';
 
 import DefaultLayout from '@/layouts/default';
 import useFetch from '@/hooks/useFetch';
@@ -8,6 +8,7 @@ import GradientText from '@/components/GradientText';
 
 export default function RecipePage() {
   const { id } = useParams();
+  const navigate = useNavigate();
 
   const { data } = useFetch<Recipe>(
     `https://themealdb.com/api/json/v1/1/lookup.php?i=${id}`
@@ -60,39 +61,78 @@ export default function RecipePage() {
 
   return (
     <DefaultLayout>
-      <section className="flex flex-row items-center gap-10 pb-5">
-        <div className="basis-1/2">
-          <Image alt={recipe?.strMeal} src={`${recipe?.strMealThumb}/large`} />
-        </div>
-        <div className="flex flex-col gap-3 items-start basis-1/2">
-          <div className="flex flex-row gap-2">
-            <Chip>{recipe?.strArea}</Chip>
-            <Chip>{recipe?.strCategory}</Chip>
-          </div>
-
-          <GradientText
-            animationSpeed={3}
-            className="text-5xl font-bold"
-            colors={['#40ffaa', '#4079ff']}
-            showBorder={false}
-          >
+      <section>
+        <h1 className="text-5xl text-center">
+          <GradientText className="font-heading font-bold text-5xl">
             {recipe?.strMeal}
           </GradientText>
+        </h1>
+        <div className="flex flex-row flex-wrap gap-2 justify-center">
+          <Link href={`browse/cuisine/${recipe?.strArea}`}>
+            <Chip
+              classNames={{
+                base: 'hover:bg-primary transition dark:text-white'
+              }}
+              radius="sm"
+              size="md"
+            >
+              {recipe?.strArea}
+            </Chip>
+          </Link>
+          <Link href={`browse/category/${recipe?.strCategory}`}>
+            <Chip
+              classNames={{
+                base: 'hover:bg-primary transition dark:text-white'
+              }}
+              radius="sm"
+              size="md"
+            >
+              {recipe?.strCategory}
+            </Chip>
+          </Link>
+        </div>
+      </section>
+      <section className="flex flex-col md:flex-row gap-10 py-10">
+        <div className="flex flex-col items-center md:items-start basis-2/5">
+          <h2 className="hidden md:flex text-primary text-2xl text-center md:text-left">
+            Recipe Image
+          </h2>
+          <Divider className="hidden md:block mt-3 mb-6" />
+          <div className="max-w-[80%] md:max-w-[100%]">
+            <Image
+              isBlurred
+              alt={recipe?.strMeal}
+              src={`${recipe?.strMealThumb}/large`}
+            />
+          </div>
+        </div>
 
-          <div className="grid grid-cols-3 gap-5 w-full">
+        <div className="basis-3/5">
+          <h2 className="text-2xl text-center md:text-left text-primary">
+            Ingredients
+          </h2>
+          <Divider className="mt-3 mb-6" />
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
             {ingredients.map((ingredient, index) => (
-              <Card key={index} isPressable className="max-w-[400px]">
+              <Card
+                key={index}
+                isHoverable
+                isPressable
+                radius="sm"
+                onPress={() =>
+                  navigate(`/browse/ingredient/${ingredient.name}`)
+                }
+              >
                 <CardBody className="flex flex-row flex-nowrap gap-3">
                   <Image
                     alt={ingredient.name}
-                    height={40}
-                    radius="sm"
-                    src={`https://themealdb.com/images/ingredients/${ingredient.name.replaceAll(' ', '_')}.png`}
-                    width={40}
+                    height={50}
+                    src={`https://themealdb.com/images/ingredients/${ingredient.name.replaceAll(' ', '_')}-small.png`}
+                    width={50}
                   />
                   <div className="flex flex-col">
                     <p className="text-md">{ingredient.name}</p>
-                    <p className="text-small text-default-500">
+                    <p className="text-small text-default-700">
                       {ingredient.measure}
                     </p>
                   </div>
@@ -102,25 +142,20 @@ export default function RecipePage() {
           </div>
         </div>
       </section>
-      <Divider />
-      <section className="flex flex-col gap-1 mt-5">
-        {instructions && (
-          <>
-            {instructions.map(
-              (step, index) =>
-                step && (
-                  <Card key={index}>
-                    <CardBody>
-                      <p>
-                        <span className="mr-2 text-primary">{index + 1}.</span>
-                        {step}
-                      </p>
-                    </CardBody>
-                  </Card>
-                )
-            )}
-          </>
-        )}
+
+      <h2 className="text-2xl text-center md:text-left text-primary">
+        Instructions
+      </h2>
+      <Divider className="mt-3 mb-6" />
+      <section className="flex flex-col mt-5">
+        {instructions.map((step, index) => (
+          <Card key={index} radius="none" shadow="sm">
+            <CardBody className="flex flex-row gap-2">
+              <span className="text-primary font-bold">{index + 1}.</span>
+              <span>{step}</span>
+            </CardBody>
+          </Card>
+        ))}
       </section>
     </DefaultLayout>
   );
