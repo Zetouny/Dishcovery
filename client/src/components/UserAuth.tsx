@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useState } from 'react';
 import {
   Avatar,
   Dropdown,
@@ -8,19 +8,14 @@ import {
 } from '@heroui/react';
 
 import LoginModal from '@/components/LoginModal';
+import SignupModal from '@/components/SignupModal';
 import { UserContext } from '@/context/UserContext';
 
 export default function UserAuth() {
-  const { user, setUser, logOut } = useContext(UserContext);
+  const { user, logOut } = useContext(UserContext);
 
   const [isLoginOpen, setIsLoginOpen] = useState<boolean>(false);
   const [isSignupOpen, setIsSignupOpen] = useState<boolean>(false);
-  const [loginSubmitted, setLoginSubmitted] = useState<any>(null);
-  const [signupSubmitted, setSignupSubmitted] = useState<any>(null);
-
-  useEffect(() => {
-    setUser(loginSubmitted);
-  }, [loginSubmitted]);
 
   return (
     <>
@@ -72,7 +67,11 @@ export default function UserAuth() {
         isLoginOpen={isLoginOpen}
         setIsLoginOpen={setIsLoginOpen}
         setIsSignupOpen={setIsSignupOpen}
-        setLoginSubmitted={setLoginSubmitted}
+      />
+
+      <SignupModal
+        isSignupOpen={isSignupOpen}
+        setIsSignupOpen={setIsSignupOpen}
       />
     </>
   );

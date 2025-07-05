@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react';
+import { useState } from 'react';
 import {
   Button,
   Form,
@@ -12,23 +12,17 @@ import {
 
 import { LockIcon, MailIcon } from './icons';
 
-import { UserContext } from '@/context/UserContext';
-
 type Setter<T> = React.Dispatch<React.SetStateAction<T>>;
 
-type LoginModalProps = {
-  isLoginOpen: boolean;
-  setIsLoginOpen: Setter<boolean>;
+type SignupModalProps = {
+  isSignupOpen: boolean;
   setIsSignupOpen: Setter<boolean>;
 };
 
-export default function LoginModal({
-  isLoginOpen,
-  setIsLoginOpen,
+export default function SignupModal({
+  isSignupOpen,
   setIsSignupOpen
-}: LoginModalProps) {
-  const { setUser } = useContext(UserContext);
-
+}: SignupModalProps) {
   const [errors, setErrors] = useState({ error: '' });
 
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
@@ -36,7 +30,7 @@ export default function LoginModal({
     const data = Object.fromEntries(new FormData(e.currentTarget));
 
     try {
-      const response = await fetch('/api/users/login', {
+      const response = await fetch('/api/users', {
         method: 'POST',
         credentials: 'include',
         headers: { 'Content-Type': 'application/json' },
@@ -50,8 +44,7 @@ export default function LoginModal({
       }
 
       setErrors({ error: '' });
-      setUser(apiData);
-      setIsLoginOpen(false);
+      setIsSignupOpen(false);
     } catch (error) {
       setErrors({ error: `${error}` });
     }
@@ -60,7 +53,7 @@ export default function LoginModal({
   return (
     <Modal
       backdrop="blur"
-      isOpen={isLoginOpen}
+      isOpen={isSignupOpen}
       motionProps={{
         variants: {
           enter: {
@@ -82,12 +75,12 @@ export default function LoginModal({
         }
       }}
       placement="top-center"
-      onOpenChange={setIsLoginOpen}
+      onOpenChange={setIsSignupOpen}
     >
       <ModalContent>
-        {(onClose) => (
+        {() => (
           <Form className="block" validationErrors={errors} onSubmit={onSubmit}>
-            <ModalHeader className="flex flex-col gap-1">Log in</ModalHeader>
+            <ModalHeader className="flex flex-col gap-1">Sign up</ModalHeader>
 
             <ModalBody>
               <Input
@@ -104,6 +97,8 @@ export default function LoginModal({
                   if (value.length < 3) {
                     return 'Username must be at least 3 characters long';
                   }
+
+                  return value === 'admin' ? 'Nice try!' : null;
                 }}
                 variant="bordered"
               />
@@ -129,18 +124,8 @@ export default function LoginModal({
               )}
             </ModalBody>
             <ModalFooter>
-              <Button
-                color="primary"
-                variant="ghost"
-                onPress={() => {
-                  onClose();
-                  setIsSignupOpen(true);
-                }}
-              >
-                Sign up
-              </Button>
               <Button color="primary" type="submit">
-                Sign in
+                Sign up
               </Button>
             </ModalFooter>
           </Form>

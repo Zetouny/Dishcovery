@@ -6,9 +6,13 @@ type UserContextType = {
   logOut: () => Promise<void>;
 };
 
-export const UserContext = createContext<UserContextType | undefined>(
-  undefined
-);
+const defaultUserContext: UserContextType = {
+  user: null,
+  setUser: () => {},
+  logOut: async () => {}
+};
+
+export const UserContext = createContext<UserContextType>(defaultUserContext);
 
 export default function UserProvider({
   children
