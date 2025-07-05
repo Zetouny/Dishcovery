@@ -58,12 +58,12 @@ export const login = async (req, res) => {
     });
 
     if (!findUser) {
-      return res.status(404).json({ error: "User doesn't exist" });
+      return res.status(404).json({ error: 'Username/password is incorrect' });
     }
 
     const comparePassword = await compare(password, findUser.password);
     if (!comparePassword) {
-      return res.status(401).json({ error: 'Incorrect Password' });
+      return res.status(404).json({ error: 'Username/password is incorrect' });
     }
 
     const userData = {

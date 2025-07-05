@@ -1,4 +1,4 @@
-import { Link, Avatar } from '@heroui/react';
+import { Link } from '@heroui/react';
 import {
   Navbar as HeroUINavbar,
   NavbarBrand,
@@ -9,6 +9,7 @@ import { NavLink } from 'react-router-dom';
 
 import { ThemeSwitch } from '@/components/theme-switch';
 import { HeartFilledIcon, Logo } from '@/components/icons';
+import UserAuth from '@/components/UserAuth';
 
 export const Navbar = () => {
   return (
@@ -60,15 +61,7 @@ export const Navbar = () => {
         </NavbarItem>
 
         <NavbarItem className="flex">
-          <Link href="/login">
-            <Avatar
-              as="button"
-              className="transition-transform"
-              color="primary"
-              name=""
-              size="sm"
-            />
-          </Link>
+          <UserAuth />
         </NavbarItem>
       </NavbarContent>
 

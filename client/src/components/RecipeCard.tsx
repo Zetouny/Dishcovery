@@ -58,7 +58,7 @@ export default function RecipeCard({ item, random }: RecipeCardProps) {
         removeWrapper
         alt={item?.strMeal}
         className="z-0 w-full h-full scale-125 -translate-y-6 object-cover"
-        src={`${item?.strMealThumb}/large`}
+        src={`${item?.strMealThumb}`}
       />
       {random ? (
         <CardFooter className="absolute bg-white/50 dark:bg-black/50 bottom-0 border-t-1 border-zinc-100/50 dark:border-zinc-600/50 z-10 justify-between">

@@ -102,7 +102,7 @@ export default function RecipePage() {
             <Image
               isBlurred
               alt={recipe?.strMeal}
-              src={`${recipe?.strMealThumb}/large`}
+              src={`${recipe?.strMealThumb}`}
             />
           </div>
         </div>
@@ -127,7 +127,7 @@ export default function RecipePage() {
                   <Image
                     alt={ingredient.name}
                     height={50}
-                    src={`https://themealdb.com/images/ingredients/${ingredient.name.replaceAll(' ', '_')}-small.png`}
+                    src={`https://themealdb.com/images/ingredients/${ingredient.name.replaceAll(' ', '_')}.png`}
                     width={50}
                   />
                   <div className="flex flex-col">
