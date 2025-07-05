@@ -67,16 +67,48 @@ export const login = async (req, res) => {
     }
 
     const userData = {
-      id: findUser.id
+      id: findUser.id,
+      username: findUser.username
     };
 
-    const token = jwt.sign(userData, TOKEN_KEY);
-    res.json({ token });
+    const token = jwt.sign(userData, TOKEN_KEY, { expiresIn: '15d' });
+
+    res.cookie('token', token, {
+      httpOnly: true,
+      secure: true,
+      sameSite: 'lax',
+      maxAge: 15 * 24 * 60 * 60 * 1000 // 15 days in milliseconds
+    });
+
+    res.json(userData);
   } catch (error) {
     console.error(error);
   } finally {
     await mongoClient.close();
   }
+};
+
+export const auth = async (req, res) => {
+  const token = req?.cookies?.token;
+
+  if (!token) return res.sendStatus(401);
+
+  try {
+    const decoded = jwt.verify(token, TOKEN_KEY);
+
+    res.json(decoded);
+  } catch (err) {
+    return res.sendStatus(401);
+  }
+};
+
+export const logOut = async (req, res) => {
+  res.clearCookie('token', {
+    httpOnly: true,
+    secure: true,
+    sameSite: 'lax'
+  });
+  res.json({ message: 'Logged out' });
 };
 
 const validateUser = (username, password, res) => {

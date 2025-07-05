@@ -53,6 +53,7 @@ export default function LoginModal({
     try {
       const response = await fetch('/api/users/login', {
         method: 'POST',
+        credentials: 'include',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data)
       });
