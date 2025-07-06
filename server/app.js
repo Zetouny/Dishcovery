@@ -7,7 +7,14 @@ import usersRouter from './routes/users.js';
 import favoritesRouter from './routes/favorites.js';
 
 const app = express();
-export const mongoClient = new MongoClient(process.env.MONGODB_URL);
+export const mongoClient = new MongoClient(process.env.MONGODB_URL, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  ssl: true,
+  sslValidate: false, // This might help with SSL issues in development
+  serverSelectionTimeoutMS: 30000, // 30 seconds timeout
+  connectTimeoutMS: 30000
+});
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
