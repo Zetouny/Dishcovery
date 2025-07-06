@@ -7,9 +7,19 @@ import favoritesRouter from './routes/favorites.js';
 const app = express();
 export const mongoClient = new MongoClient(process.env.MONGODB_URL);
 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
 app.use(express.json());
 app.use(cookieParser());
+
+app.use(express.static(path.join(__dirname, '..', 'dist')));
+
 app.use('/users', usersRouter);
 app.use('/favorites', favoritesRouter);
+
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '..', 'dist', 'index.html'));
+});
 
 export default app;
