@@ -4,7 +4,6 @@ import { hash, compare } from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import { mongoClient } from '../app.js';
 
-export const USERS_DATABASE = [];
 const SALTS_ROUND = 12;
 const TOKEN_KEY = process.env.TOKEN_KEY;
 
@@ -92,7 +91,7 @@ export const login = async (req, res) => {
 export const auth = async (req, res) => {
   const token = req?.cookies?.token;
 
-  if (!token) return res.sendStatus(401);
+  if (!token) return res.json(null);
 
   try {
     const decoded = jwt.verify(token, TOKEN_KEY);
@@ -110,33 +109,6 @@ export const logOut = async (req, res) => {
     sameSite: 'lax'
   });
   res.json({ message: 'Logged out' });
-};
-
-export const favorites = async (req, res) => {
-  const token = req?.cookies?.token;
-
-  if (!token) return res.sendStatus(401);
-
-  try {
-    const decodedToken = jwt.verify(token, TOKEN_KEY);
-
-    await mongoClient.connect();
-    const collection = mongoClient.db('dishcovery').collection('users');
-
-    const findUser = await collection.findOne({ id: decodedToken.id });
-
-    if (!findUser) {
-      return res
-        .status(404)
-        .json({ error: 'Invalid User, Please login again' });
-    }
-
-    res.json(findUser.favorites);
-  } catch (error) {
-    console.error(error);
-  } finally {
-    await mongoClient.close();
-  }
 };
 
 const validateUser = (username, password, res) => {

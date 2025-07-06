@@ -8,13 +8,13 @@ import '@/styles/globals.css';
 import UserProvider from '@/context/UserContext';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
-  // <React.StrictMode>
-  <BrowserRouter>
-    <Provider>
-      <UserProvider>
-        <App />
-      </UserProvider>
-    </Provider>
-  </BrowserRouter>
-  // </React.StrictMode>
+  <React.StrictMode>
+    <BrowserRouter>
+      <Provider>
+        <UserProvider>
+          <App />
+        </UserProvider>
+      </Provider>
+    </BrowserRouter>
+  </React.StrictMode>
 );

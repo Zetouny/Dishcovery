@@ -5,18 +5,14 @@ import {
   NavbarContent,
   NavbarItem
 } from '@heroui/navbar';
-import { useContext } from 'react';
 
 import { ThemeSwitch } from '@/components/theme-switch';
 import { Logo } from '@/components/icons';
 import UserAuth from '@/components/UserAuth';
-import { UserContext } from '@/context/UserContext';
 
 export const Navbar = () => {
-  const { user } = useContext(UserContext);
-
   return (
-    <HeroUINavbar maxWidth="xl" position="sticky">
+    <HeroUINavbar isBordered maxWidth="xl" position="sticky">
       <NavbarContent className="basis-3/4 sm:basis-full" justify="start">
         <NavbarBrand className="gap-3 max-w-fit">
           <Link

@@ -37,10 +37,10 @@ export default function BrowsePage() {
         </span>
       </h1>
       <section className="gap-6 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-        {recipes?.map((item) => (
+        {recipes.map((item: Recipe['meals'][number]) => (
           <RecipeCard
             key={item.idMeal}
-            isFavorite={favorites.includes(item.idMeal)}
+            isFavorite={favorites?.includes(item.idMeal)}
             item={item}
             random={false}
           />

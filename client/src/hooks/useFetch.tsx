@@ -1,26 +1,28 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect } from 'react';
 
 export default function useFetch<T>(
   url: string,
   options?: RequestInit
 ): {
-  data: T | null;
+  data: T | any;
   loading: boolean;
   error: string | null;
-  refetch: () => {};
+  refetch: () => Promise<void>;
 } {
-  const [data, setData] = useState<T | null>(null);
+  const [data, setData] = useState<T>();
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
-  const fetchData = useCallback(async () => {
+  async function fetchData() {
+    setLoading(true);
+    setError(null);
     try {
       const response = await fetch(url, options);
 
       if (!response.ok) {
         throw new Error("We couldn't request the data, please try again later");
       }
-      const data: T = await response.json();
+      const data = await response.json();
 
       setData(data);
     } catch (error: any) {
@@ -28,11 +30,11 @@ export default function useFetch<T>(
     } finally {
       setLoading(false);
     }
-  }, [url, JSON.stringify(options)]);
+  }
 
   useEffect(() => {
     fetchData();
-  }, [fetchData]);
+  }, [url]);
 
   return { data, loading, error, refetch: fetchData };
 }

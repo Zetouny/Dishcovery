@@ -38,7 +38,12 @@ export default function UserAuth() {
             disabledKeys={['loggedIn']}
             variant="flat"
           >
-            <DropdownItem key="loggedIn" className="font-bold" color="primary">
+            <DropdownItem
+              key="loggedIn"
+              className="font-bold"
+              color="primary"
+              textValue={`Logged in as ${user.username}`}
+            >
               Logged in as {user.username}
             </DropdownItem>
             <DropdownItem

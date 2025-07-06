@@ -17,18 +17,12 @@ import { Recipe } from '@/types/recipe';
 import RecipeCard from '@/components/RecipeCard';
 import GradientText from '@/components/GradientText';
 import { UserContext } from '@/context/UserContext';
-
-type Categories = {
-  categories: {
-    idCategory: string;
-    strCategory: string;
-    strCategoryThumb: string;
-  }[];
-};
+import { Categories } from '@/types/categories';
 
 export default function HomePage() {
   const [recipeSearch, setRecipeSearch] = useState<string>('');
   const { favorites } = useContext(UserContext);
+
   const navigate = useNavigate();
 
   const { data, loading } = useFetch<Recipe>(
@@ -78,7 +72,7 @@ export default function HomePage() {
             onInputChange={setRecipeSearch}
             onSelectionChange={(key) => navigate(`/recipe/${key}`)}
           >
-            {(item) => (
+            {(item: Recipe['meals'][number]) => (
               <AutocompleteItem
                 key={item.idMeal}
                 className="capitalize"
@@ -111,7 +105,7 @@ export default function HomePage() {
           {randomRecipe && (
             <RecipeCard
               key={randomRecipe.idMeal}
-              isFavorite={favorites.includes(randomRecipe.idMeal)}
+              isFavorite={favorites?.includes(randomRecipe.idMeal)}
               item={randomRecipe}
               random={true}
             />
@@ -125,7 +119,7 @@ export default function HomePage() {
         </h2>
         <Divider className="mt-3 mb-6" />
         <div className="gap-2 grid grid-cols-2 lg:grid-cols-4">
-          {recipeCategories?.map((item) => (
+          {recipeCategories?.map((item: Recipe['meals'][number]) => (
             <Card
               key={item.idCategory}
               isFooterBlurred
@@ -156,7 +150,7 @@ export default function HomePage() {
         </h2>
         <Divider className="mt-3 mb-6" />
         <div className="gap-2 grid grid-cols-3 lg:grid-cols-6">
-          {recipeCuisine?.map((item) => (
+          {recipeCuisine?.map((item: Recipe['meals'][number]) => (
             <Button
               key={item.strArea}
               className="data-[hover=true]:bg-primary-500"

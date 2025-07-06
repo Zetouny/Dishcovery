@@ -7,6 +7,6 @@ export type Recipe = {
     strCategory: string;
     strInstructions: string;
     strYoutube: string;
-    [key: string]: string; // allows dynamic access too
+    [key: string]: string;
   }[];
 };
