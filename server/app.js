@@ -2,18 +2,17 @@ import express from 'express';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import cookieParser from 'cookie-parser';
-import { MongoClient } from 'mongodb';
+import { MongoClient, ServerApiVersion } from 'mongodb';
 import usersRouter from './routes/users.js';
 import favoritesRouter from './routes/favorites.js';
 
 const app = express();
 export const mongoClient = new MongoClient(process.env.MONGODB_URL, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-  ssl: true,
-  sslValidate: false, // This might help with SSL issues in development
-  serverSelectionTimeoutMS: 30000, // 30 seconds timeout
-  connectTimeoutMS: 30000
+  serverApi: {
+    version: ServerApiVersion.v1,
+    strict: true,
+    deprecationErrors: true
+  }
 });
 
 const __filename = fileURLToPath(import.meta.url);
