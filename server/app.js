@@ -17,11 +17,16 @@ app.use(cookieParser());
 
 app.use(express.static(path.join(__dirname, '..', 'dist')));
 
-app.use('/users', usersRouter);
-app.use('/favorites', favoritesRouter);
+app.use('/api/users', usersRouter);
+app.use('/api/favorites', favoritesRouter);
 
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, '..', 'dist', 'index.html'));
+app.get('/*path', (req, res) => {
+  try {
+    res.sendFile(path.join(__dirname, '..', 'dist', 'index.html'));
+  } catch (error) {
+    console.error('Error serving index.html:', error);
+    res.status(500).send('Error loading application');
+  }
 });
 
 export default app;

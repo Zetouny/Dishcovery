@@ -26,7 +26,7 @@ export default function BrowsePage() {
   }
 
   const { data } = useFetch<Recipe>(typeURL());
-  const recipes = data?.meals ?? null;
+  const recipes = data?.meals ?? [];
 
   return (
     <DefaultLayout>
