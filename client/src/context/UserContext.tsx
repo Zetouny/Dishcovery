@@ -1,15 +1,32 @@
 import { createContext, useEffect, useState } from 'react';
 
-type UserContextType = {
-  user: any;
-  setUser: React.Dispatch<React.SetStateAction<any>>;
+import useFetch from '@/hooks/useFetch';
+
+export type User = {
+  id: string;
+  username: string;
+  iat: number;
+  exp: number;
+};
+
+export type UserContextType = {
+  user: User | null;
+  setUser: React.Dispatch<React.SetStateAction<User | null>>;
   logOut: () => Promise<void>;
+  refetchUser: () => void;
+  refetchFavorites: () => void;
+  favorites: string[];
+  toggleFavorite: (id: string) => Promise<void>;
 };
 
 const defaultUserContext: UserContextType = {
   user: null,
   setUser: () => {},
-  logOut: async () => {}
+  logOut: async () => {},
+  refetchUser: () => {},
+  refetchFavorites: () => {},
+  favorites: [],
+  toggleFavorite: async () => {}
 };
 
 export const UserContext = createContext<UserContextType>(defaultUserContext);
@@ -19,39 +36,63 @@ export default function UserProvider({
 }: {
   children: React.ReactNode;
 }) {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState<User | null>(null);
+  const [favorites, setFavorites] = useState<string[]>([]);
+
+  const { data: userData, refetch: refetchUser } = useFetch<User | null>(
+    '/api/users/auth',
+    {
+      credentials: 'include'
+    }
+  );
+
+  const { data: favoritesData, refetch: refetchFavorites } = useFetch<string[]>(
+    '/api/users/favorites',
+    {
+      credentials: 'include'
+    }
+  );
 
   useEffect(() => {
-    async function authUser() {
-      const response = await fetch('/api/users/auth', {
-        credentials: 'include'
-      });
+    if (userData) setUser(userData);
+    else setUser(null);
 
-      if (!response.ok) {
-        setUser(null);
-
-        return;
-      }
-
-      const data = await response.json();
-
-      setUser(data);
-    }
-
-    authUser();
-  }, []);
+    if (favoritesData) setFavorites(favoritesData);
+    else setFavorites([]);
+  }, [userData, favoritesData]);
 
   async function logOut() {
     await fetch('/api/users/logout', {
       method: 'POST',
       credentials: 'include'
     });
-
     setUser(null);
+    setFavorites([]);
+    refetchUser();
+    refetchFavorites();
+  }
+
+  async function toggleFavorite(id: string) {
+    if (favorites.includes(id)) {
+      setFavorites(favorites.filter((item) => item !== id));
+    } else {
+      setFavorites([...favorites, id]);
+    }
+    refetchFavorites();
   }
 
   return (
-    <UserContext.Provider value={{ user, setUser, logOut }}>
+    <UserContext.Provider
+      value={{
+        user,
+        setUser,
+        refetchUser,
+        refetchFavorites,
+        logOut,
+        favorites,
+        toggleFavorite
+      }}
+    >
       {children}
     </UserContext.Provider>
   );

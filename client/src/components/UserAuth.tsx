@@ -6,6 +6,7 @@ import {
   DropdownItem,
   DropdownMenu
 } from '@heroui/react';
+import { useNavigate } from 'react-router-dom';
 
 import LoginModal from '@/components/LoginModal';
 import SignupModal from '@/components/SignupModal';
@@ -13,6 +14,7 @@ import { UserContext } from '@/context/UserContext';
 
 export default function UserAuth() {
   const { user, logOut } = useContext(UserContext);
+  const navigator = useNavigate();
 
   const [isLoginOpen, setIsLoginOpen] = useState<boolean>(false);
   const [isSignupOpen, setIsSignupOpen] = useState<boolean>(false);
@@ -38,6 +40,12 @@ export default function UserAuth() {
           >
             <DropdownItem key="loggedIn" className="font-bold" color="primary">
               Logged in as {user.username}
+            </DropdownItem>
+            <DropdownItem
+              key="favorite"
+              onPress={() => navigator('/favorites')}
+            >
+              Favorites
             </DropdownItem>
             <DropdownItem key="signup" color="danger" onPress={() => logOut()}>
               Log out

@@ -5,13 +5,16 @@ import {
   NavbarContent,
   NavbarItem
 } from '@heroui/navbar';
-import { NavLink } from 'react-router-dom';
+import { useContext } from 'react';
 
 import { ThemeSwitch } from '@/components/theme-switch';
-import { HeartFilledIcon, Logo } from '@/components/icons';
+import { Logo } from '@/components/icons';
 import UserAuth from '@/components/UserAuth';
+import { UserContext } from '@/context/UserContext';
 
 export const Navbar = () => {
+  const { user } = useContext(UserContext);
+
   return (
     <HeroUINavbar maxWidth="xl" position="sticky">
       <NavbarContent className="basis-3/4 sm:basis-full" justify="start">
@@ -54,11 +57,13 @@ export const Navbar = () => {
           <ThemeSwitch />
         </NavbarItem>
 
-        <NavbarItem className="flex">
-          <NavLink to={'/favorites'}>
-            <HeartFilledIcon />
-          </NavLink>
-        </NavbarItem>
+        {/* {user && (
+          <NavbarItem className="flex">
+            <NavLink to={'/favorites'}>
+              <HeartFilledIcon />
+            </NavLink>
+          </NavbarItem>
+        )} */}
 
         <NavbarItem className="flex">
           <UserAuth />

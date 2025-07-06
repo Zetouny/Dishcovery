@@ -73,7 +73,7 @@ export const MoonFilledIcon = ({
 }: IconSvgProps) => (
   <svg
     aria-hidden="true"
-    className="fill-current hover:fill-indigo-800 transition"
+    className="fill-current hover:fill-black transition"
     focusable="false"
     height={size || height}
     role="presentation"
@@ -112,14 +112,17 @@ export const HeartFilledIcon = ({
   size = 24,
   width,
   height,
+  isFavorite,
   ...props
 }: IconSvgProps) => (
   <svg
     aria-hidden="true"
-    className="fill-current hover:fill-danger transition"
+    className="hover:fill-danger hover:stroke-transparent transition"
+    fill={isFavorite ? '#c80f4f' : 'rgba(0,0,0,0)'}
     focusable="false"
     height={size || height}
     role="presentation"
+    stroke={isFavorite ? 'none' : 'currentColor'}
     viewBox="0 0 24 24"
     width={size || width}
     {...props}
@@ -132,6 +135,33 @@ export const HeartFilledIcon = ({
     />
   </svg>
 );
+
+// export const HeartIcon = ({
+//   fill = 'currentColor',
+//   filled,
+//   size,
+//   height,
+//   width,
+//   ...props
+// }: IconSvgProps) => {
+//   return (
+//     <svg
+//       fill={filled ? fill : 'none'}
+//       height={size || height || 24}
+//       viewBox="0 0 24 24"
+//       width={size || width || 24}
+//       {...props}
+//     >
+//       <path
+//         d="M12.62 20.81c-.34.12-.9.12-1.24 0C8.48 19.82 2 15.69 2 8.69 2 5.6 4.49 3.1 7.56 3.1c1.82 0 3.43.88 4.44 2.24a5.53 5.53 0 0 1 4.44-2.24C19.51 3.1 22 5.6 22 8.69c0 7-6.48 11.13-9.38 12.12Z"
+//         stroke={fill}
+//         strokeLinecap="round"
+//         strokeLinejoin="round"
+//         strokeWidth={1.5}
+//       />
+//     </svg>
+//   );
+// };
 
 export const SearchIcon = (props: IconSvgProps) => (
   <svg

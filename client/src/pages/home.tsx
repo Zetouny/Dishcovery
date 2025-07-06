@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import {
   Card,
   CardFooter,
@@ -16,6 +16,7 @@ import useFetch from '@/hooks/useFetch';
 import { Recipe } from '@/types/recipe';
 import RecipeCard from '@/components/RecipeCard';
 import GradientText from '@/components/GradientText';
+import { UserContext } from '@/context/UserContext';
 
 type Categories = {
   categories: {
@@ -27,6 +28,7 @@ type Categories = {
 
 export default function HomePage() {
   const [recipeSearch, setRecipeSearch] = useState<string>('');
+  const { favorites } = useContext(UserContext);
   const navigate = useNavigate();
 
   const { data, loading } = useFetch<Recipe>(
@@ -109,6 +111,7 @@ export default function HomePage() {
           {randomRecipe && (
             <RecipeCard
               key={randomRecipe.idMeal}
+              isFavorite={favorites.includes(randomRecipe.idMeal)}
               item={randomRecipe}
               random={true}
             />

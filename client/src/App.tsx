@@ -4,7 +4,7 @@ import HomePage from '@/pages/home';
 import RecipePage from '@/pages/recipe';
 import BrowsePage from '@/pages/browse';
 import FavoritesPage from '@/pages/favorites';
-import LoginPage from '@/pages/login';
+import NotFound404 from '@/pages/notFound404';
 
 function App() {
   return (
@@ -13,8 +13,7 @@ function App() {
       <Route element={<RecipePage />} path="/recipe/:id" />
       <Route element={<BrowsePage />} path="/browse/:type/:value" />
       <Route element={<FavoritesPage />} path="/favorites" />
-      <Route element={<LoginPage />} path="/login" />
-      {/* <Route element={<RegisterPage />} path="/register" /> */}
+      <Route element={<NotFound404 />} path="*" />
     </Routes>
   );
 }

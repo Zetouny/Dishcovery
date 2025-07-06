@@ -29,7 +29,8 @@ export const addUser = async (req, res) => {
     const userData = {
       id: crypto.randomUUID(),
       username,
-      password: await hash(password, SALTS_ROUND)
+      password: await hash(password, SALTS_ROUND),
+      favorites: []
     };
 
     await collection.insertOne(userData);
@@ -109,6 +110,33 @@ export const logOut = async (req, res) => {
     sameSite: 'lax'
   });
   res.json({ message: 'Logged out' });
+};
+
+export const favorites = async (req, res) => {
+  const token = req?.cookies?.token;
+
+  if (!token) return res.sendStatus(401);
+
+  try {
+    const decodedToken = jwt.verify(token, TOKEN_KEY);
+
+    await mongoClient.connect();
+    const collection = mongoClient.db('dishcovery').collection('users');
+
+    const findUser = await collection.findOne({ id: decodedToken.id });
+
+    if (!findUser) {
+      return res
+        .status(404)
+        .json({ error: 'Invalid User, Please login again' });
+    }
+
+    res.json(findUser.favorites);
+  } catch (error) {
+    console.error(error);
+  } finally {
+    await mongoClient.close();
+  }
 };
 
 const validateUser = (username, password, res) => {

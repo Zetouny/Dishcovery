@@ -27,7 +27,7 @@ export default function LoginModal({
   setIsLoginOpen,
   setIsSignupOpen
 }: LoginModalProps) {
-  const { setUser } = useContext(UserContext);
+  const { refetchUser, refetchFavorites } = useContext(UserContext);
 
   const [errors, setErrors] = useState({ error: '' });
 
@@ -50,7 +50,8 @@ export default function LoginModal({
       }
 
       setErrors({ error: '' });
-      setUser(apiData);
+      refetchUser();
+      refetchFavorites();
       setIsLoginOpen(false);
     } catch (error) {
       setErrors({ error: `${error}` });

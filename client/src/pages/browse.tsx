@@ -1,13 +1,16 @@
 import { useParams } from 'react-router-dom';
+import { useContext } from 'react';
 
 import DefaultLayout from '@/layouts/default';
 import useFetch from '@/hooks/useFetch';
 import RecipeCard from '@/components/RecipeCard';
 import { Recipe } from '@/types/recipe';
 import GradientText from '@/components/GradientText';
+import { UserContext } from '@/context/UserContext';
 
 export default function BrowsePage() {
   const { type, value } = useParams();
+  const { favorites } = useContext(UserContext);
 
   function typeURL() {
     switch (type) {
@@ -35,7 +38,12 @@ export default function BrowsePage() {
       </h1>
       <section className="gap-6 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
         {recipes?.map((item) => (
-          <RecipeCard key={item.idMeal} item={item} random={false} />
+          <RecipeCard
+            key={item.idMeal}
+            isFavorite={favorites.includes(item.idMeal)}
+            item={item}
+            random={false}
+          />
         ))}
       </section>
     </DefaultLayout>
