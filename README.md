@@ -1,4 +1,4 @@
-## Dishcovery
+# Dishcovery
 
 Dishcovery is a simple web app for browsing, searching, and discovering recipes. It uses [TheMealDB API](https://www.themealdb.com/) to provide recipe data. The purpose of this app is to practice building a modern fullstack application with React and Node.js, featuring clean design and easy access to a variety of meal ideas.
 
@@ -6,7 +6,7 @@ Dishcovery is a simple web app for browsing, searching, and discovering recipes.
 
 Here is a working live demo : [https://dishcovery-kmva.onrender.com](https://dishcovery-kmva.onrender.com)
 
-![app-mockup](https://raw.githubusercontent.com/Zetouny/Dishcovery/refs/heads/main/public/app-mockup.png?token=GHSAT0AAAAAAC44H4A7BKFAWOPKY35OLL7Y2DL5BPQ)
+![app-mockup](https://i.ibb.co/WNMmHCVq/Final.png)
 
 ## Technologies Used
 
@@ -53,7 +53,7 @@ This project uses MongoDB Atlas for data storage, here is how to setup yours:
 
 Create a `.env` file in the root of your project, or use `.env.example` as a template:
 
-```
+```txt
 PORT = (Choose a port to run the server on e.g. 3000)
 TOKEN_KEY = (Add a key to be used for passwords encryption)
 MONGODB_URL = (Add your cluster connection string from the previous step)
@@ -81,11 +81,13 @@ If you changed in the frontend code, and you need to build it for deployment run
 npm run build
 ```
 
-After building is complete, you can use created `dist` folder to deploy the app.
+After building is complete, you can use created `dist` folder to deploy the app
+
+---
 
 ## Application Directory & Structure
 
-```
+```txt
 Dishcovery/
 ├── index.html
 ├── client/
@@ -100,14 +102,14 @@ Dishcovery/
     └── ... (other backend files)
 ```
 
-#### Root Level
+### Root Level
 
 - `index.html`: The main HTML file loaded by browsers; it bootstraps the frontend app.
 - `vite.config.ts`: Configuration file for Vite, the frontend build and dev server tool.
 - `eslint.config.mjs`: Linting rules for maintaining code quality and style.
 - `.prettierrc`: Configuration for code formatting using Prettier.
 
-#### `client/` (Frontend Source)
+### `client/` (Frontend Source)
 
 - `client/src/main.tsx`: Entry point for rendering the React app and wrapping it with context providers.
 - `client/src/App.tsx`: The main React component where app routes are defined.
@@ -115,7 +117,7 @@ Dishcovery/
 
 The client folder contains the entire React frontend codebase, organized into components, pages, contexts, providers, and styles. It’s where all user interface and client-side logic lives.
 
-#### `server/` (Backend Source)
+### `server/` (Backend Source)
 
 - `server/index.js`: Entry point for the backend; loads environment variables and starts the server.
 - `server/app.js`: Configures and initializes the Express.js server, sets up API routes, middleware, and static file serving.
