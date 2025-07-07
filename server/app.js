@@ -7,13 +7,7 @@ import usersRouter from './routes/users.js';
 import favoritesRouter from './routes/favorites.js';
 
 const app = express();
-export const mongoClient = new MongoClient(process.env.MONGODB_URL, {
-  serverApi: {
-    version: ServerApiVersion.v1,
-    strict: true,
-    deprecationErrors: true
-  }
-});
+export const mongoClient = new MongoClient(process.env.MONGODB_URL);
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);

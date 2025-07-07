@@ -6,6 +6,8 @@ import { mongoClient } from '../app.js';
 
 const SALTS_ROUND = 12;
 const TOKEN_KEY = process.env.TOKEN_KEY;
+const MONGODB_DB = process.env.MONGODB_DB;
+const MONGODB_USERS = process.env.MONGODB_USERS;
 
 export const addUser = async (req, res) => {
   const { username, password } = req.body;
@@ -15,9 +17,9 @@ export const addUser = async (req, res) => {
 
   try {
     await mongoClient.connect();
-    const collection = mongoClient.db('dishcovery').collection('users');
+    const COLLECTION = mongoClient.db(MONGODB_DB).collection(MONGODB_USERS);
 
-    const findUser = await collection.findOne({
+    const findUser = await COLLECTION.findOne({
       username: new RegExp(`^${username}$`, 'i')
     });
 
@@ -32,7 +34,7 @@ export const addUser = async (req, res) => {
       favorites: []
     };
 
-    await collection.insertOne(userData);
+    await COLLECTION.insertOne(userData);
 
     res.json({ id: userData.id, username });
   } catch (error) {
@@ -51,9 +53,9 @@ export const login = async (req, res) => {
 
   try {
     await mongoClient.connect();
-    const collection = mongoClient.db('dishcovery').collection('users');
+    const COLLECTION = mongoClient.db(MONGODB_DB).collection(MONGODB_USERS);
 
-    const findUser = await collection.findOne({
+    const findUser = await COLLECTION.findOne({
       username: new RegExp(`^${username}$`, 'i')
     });
 
