@@ -14,7 +14,7 @@ export default function RecipePage() {
     `https://themealdb.com/api/json/v1/1/lookup.php?i=${id}`
   );
 
-  if (data?.meals === 'Invalid ID') {
+  if (data?.meals === null) {
     return <PageNotFound />;
   }
 
@@ -118,6 +118,7 @@ export default function RecipePage() {
                 key={index}
                 isHoverable
                 isPressable
+                data-cy="ingredient-card"
                 radius="sm"
                 onPress={() =>
                   navigate(`/browse/ingredient/${ingredient.name}`)

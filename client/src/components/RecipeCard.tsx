@@ -15,13 +15,15 @@ interface RecipeCardProps {
 export default function RecipeCard({
   item,
   random,
-  isFavorite
+  isFavorite,
+  ...rest
 }: RecipeCardProps) {
   const navigate = useNavigate();
   const { user, toggleFavorite } = useContext(UserContext);
 
   return (
     <Card
+      {...rest}
       isFooterBlurred
       isPressable
       className="w-full max-h-[350px]"

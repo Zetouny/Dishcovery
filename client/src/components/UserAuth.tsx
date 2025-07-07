@@ -28,6 +28,7 @@ export default function UserAuth() {
             as="button"
             className="transition-transform hover:bg-primary aria-[expanded=true]:bg-primary transition"
             color="default"
+            data-cy="user-profile"
             name={user ? user.username[0] : ''}
             size="sm"
           />
@@ -48,6 +49,7 @@ export default function UserAuth() {
             </DropdownItem>
             <DropdownItem
               key="favorite"
+              data-cy="favorites"
               onPress={() => navigator('/favorites')}
             >
               Favorites
@@ -61,6 +63,7 @@ export default function UserAuth() {
             <DropdownItem
               key="login"
               color="primary"
+              data-cy="login-modal"
               onPress={() => setIsLoginOpen(true)}
             >
               Log in

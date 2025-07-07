@@ -51,7 +51,7 @@ export default function HomePage() {
             Welcome to <GradientText>Dishcovery</GradientText>
           </h1>
           <p className="text-2xl">Bringing the World to Your Table.</p>
-          <p className="">
+          <p data-cy="app-tagline">
             Discover, save, and share incredible recipes with a vibrant
             food-loving community. Whether you’re an adventurous home chef or
             just looking for dinner inspiration, Dishcovery helps you explore
@@ -61,6 +61,7 @@ export default function HomePage() {
           <Autocomplete
             className="mt-5"
             color="primary"
+            data-cy="autocomplete"
             inputValue={recipeSearch}
             isLoading={loading}
             items={data?.meals ?? []}
@@ -104,6 +105,7 @@ export default function HomePage() {
           {randomRecipe && (
             <RecipeCard
               key={randomRecipe.idMeal}
+              data-cy="random-recipe"
               isFavorite={favorites?.includes(randomRecipe.idMeal)}
               item={randomRecipe}
               random={true}
@@ -127,6 +129,7 @@ export default function HomePage() {
               classNames={{
                 base: 'data-[hover=true]:bg-primary/20 dark:data-[hover=true]:bg-primary/20 items-center'
               }}
+              data-cy="category-card"
               isPressable={true}
               onPress={() => navigate(`/browse/category/${item.strCategory}`)}
             >
@@ -153,6 +156,7 @@ export default function HomePage() {
             <Button
               key={item.strArea}
               className="data-[hover=true]:bg-primary-500"
+              data-cy="cuisine-card"
               variant="ghost"
               onPress={() => navigate(`./browse/cuisine/${item.strArea}`)}
             >
