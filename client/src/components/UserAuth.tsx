@@ -28,7 +28,7 @@ export default function UserAuth() {
             as="button"
             className="transition-transform hover:bg-primary aria-[expanded=true]:bg-primary transition"
             color="default"
-            name={user ? user.username[0] : ''}
+            name={user ? user.username : ''}
             size="sm"
           />
         </DropdownTrigger>

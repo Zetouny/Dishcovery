@@ -1,12 +1,12 @@
 import { useParams } from 'react-router-dom';
 import { useContext } from 'react';
 
-import DefaultLayout from '@/layouts/default';
 import useFetch from '@/hooks/useFetch';
 import RecipeCard from '@/components/RecipeCard';
 import { Recipe } from '@/types/recipe';
 import GradientText from '@/components/GradientText';
 import { UserContext } from '@/context/UserContext';
+import PageNotFound from '@/components/PageNotFound';
 
 export default function BrowsePage() {
   const { type, value } = useParams();
@@ -21,17 +21,21 @@ export default function BrowsePage() {
       case 'ingredient':
         return `https://themealdb.com/api/json/v1/1/filter.php?i=${value}`;
       default:
-        throw new Error('Invalid link');
+        return 'invalid';
     }
   }
 
-  const { data } = useFetch<Recipe>(typeURL());
+  const { data } = useFetch<Recipe | null>(typeURL());
   const recipes = data?.meals ?? [];
 
+  if (typeURL() === 'invalid' || data?.meals === null) {
+    return <PageNotFound />;
+  }
+
   return (
-    <DefaultLayout>
+    <>
       <h1 className="text-5xl text-center mb-6">
-        Recipes by{' '}
+        <span>Recipes {type === 'ingredient' ? 'with' : 'in'} </span>
         <span className="capitalize">
           <GradientText>{value}</GradientText> {type}
         </span>
@@ -46,6 +50,6 @@ export default function BrowsePage() {
           />
         ))}
       </section>
-    </DefaultLayout>
+    </>
   );
 }

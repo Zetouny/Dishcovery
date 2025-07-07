@@ -2,16 +2,7 @@ import { createContext } from 'react';
 
 import useFetch from '@/hooks/useFetch';
 import { User } from '@/types/user';
-
-export type UserContextType = {
-  user: User | null;
-  isUserLoading: boolean;
-  refetchUser: () => void;
-  logOut: () => Promise<void>;
-  favorites: string[];
-  refetchFavorites: () => void;
-  toggleFavorite: (id: string) => Promise<void>;
-};
+import { UserContextType } from '@/types/useContext';
 
 const defaultUserContext: UserContextType = {
   user: null,
@@ -52,7 +43,7 @@ export default function UserProvider({
 
   async function toggleFavorite(id: string) {
     await fetch('/api/favorites', {
-      method: 'POST',
+      method: 'PUT',
       credentials: 'include',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ favoriteId: id })

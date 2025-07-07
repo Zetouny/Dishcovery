@@ -147,7 +147,7 @@ export default {
               DEFAULT: '#d4d4d8',
               foreground: '#000'
             },
-            focus: '#006FEE',
+            focus: '#ff9f1c',
             overlay: '#000000'
           }
         },
@@ -255,7 +255,7 @@ export default {
               DEFAULT: '#52525b',
               foreground: '#fff'
             },
-            focus: '#006FEE',
+            focus: '#ff9f1c',
             overlay: '#ffffff'
           }
         }

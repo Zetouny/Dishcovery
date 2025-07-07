@@ -1,10 +1,10 @@
 import { useNavigate, useParams } from 'react-router-dom';
 import { Card, CardBody, Chip, Divider, Image, Link } from '@heroui/react';
 
-import DefaultLayout from '@/layouts/default';
 import useFetch from '@/hooks/useFetch';
 import { Recipe } from '@/types/recipe';
 import GradientText from '@/components/GradientText';
+import PageNotFound from '@/components/PageNotFound';
 
 export default function RecipePage() {
   const { id } = useParams();
@@ -13,6 +13,10 @@ export default function RecipePage() {
   const { data } = useFetch<Recipe>(
     `https://themealdb.com/api/json/v1/1/lookup.php?i=${id}`
   );
+
+  if (data?.meals === 'Invalid ID') {
+    return <PageNotFound />;
+  }
 
   const recipe = data?.meals?.[0] ?? null;
 
@@ -60,7 +64,7 @@ export default function RecipePage() {
   }
 
   return (
-    <DefaultLayout>
+    <>
       <section>
         <h1 className="text-5xl text-center">
           <GradientText className="font-heading font-bold text-5xl">
@@ -99,11 +103,7 @@ export default function RecipePage() {
           </h2>
           <Divider className="hidden md:block mt-3 mb-6" />
           <div className="max-w-[80%] md:max-w-[100%]">
-            <Image
-              isBlurred
-              alt={recipe?.strMeal}
-              src={`${recipe?.strMealThumb}`}
-            />
+            <Image alt={recipe?.strMeal} src={`${recipe?.strMealThumb}`} />
           </div>
         </div>
 
@@ -157,6 +157,6 @@ export default function RecipePage() {
           </Card>
         ))}
       </section>
-    </DefaultLayout>
+    </>
   );
 }

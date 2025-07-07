@@ -11,7 +11,6 @@ import {
 } from '@heroui/react';
 import { useNavigate } from 'react-router-dom';
 
-import DefaultLayout from '@/layouts/default';
 import useFetch from '@/hooks/useFetch';
 import { Recipe } from '@/types/recipe';
 import RecipeCard from '@/components/RecipeCard';
@@ -45,7 +44,7 @@ export default function HomePage() {
   const recipeCuisine = getRecipeCuisine.data?.meals ?? null;
 
   return (
-    <DefaultLayout>
+    <>
       <section className="flex flex-col lg:flex-row justify-between items-center gap-10">
         <div className="flex flex-col justify-between text-center lg:text-left basis-3/5 gap-2 ">
           <h1 className="text-5xl">
@@ -126,7 +125,7 @@ export default function HomePage() {
               isHoverable
               className="p-5"
               classNames={{
-                base: 'data-[hover=true]:bg-primary/20 dark:data-[hover=true]:bg-primary/20'
+                base: 'data-[hover=true]:bg-primary/20 dark:data-[hover=true]:bg-primary/20 items-center'
               }}
               isPressable={true}
               onPress={() => navigate(`/browse/category/${item.strCategory}`)}
@@ -162,6 +161,6 @@ export default function HomePage() {
           ))}
         </div>
       </section>
-    </DefaultLayout>
+    </>
   );
 }

@@ -1,12 +1,12 @@
 import express from 'express';
 import {
   getFavorites,
-  addFavorite
+  updateFavorite
 } from '../controllers/favoritesController.js';
 
 const favoritesRouter = express.Router();
 
 favoritesRouter.get('/', getFavorites);
-favoritesRouter.post('/', addFavorite);
+favoritesRouter.put('/', updateFavorite);
 
 export default favoritesRouter;

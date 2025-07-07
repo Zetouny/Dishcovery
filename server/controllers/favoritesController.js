@@ -31,7 +31,7 @@ export const getFavorites = async (req, res) => {
   }
 };
 
-export const addFavorite = async (req, res) => {
+export const updateFavorite = async (req, res) => {
   const { favoriteId } = req.body;
 
   if (!favoriteId) {

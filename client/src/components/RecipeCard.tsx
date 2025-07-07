@@ -4,17 +4,10 @@ import { useContext } from 'react';
 
 import { HeartFilledIcon } from '@/components/icons';
 import { UserContext } from '@/context/UserContext';
-
-interface RecipeItem {
-  idMeal: string;
-  strMeal: string;
-  strArea: string;
-  strCategory: string;
-  strMealThumb: string;
-}
+import { Recipe } from '@/types/recipe';
 
 interface RecipeCardProps {
-  item: RecipeItem;
+  item: Recipe['meals'][number];
   random: boolean;
   isFavorite: boolean;
 }

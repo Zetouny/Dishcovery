@@ -2,7 +2,6 @@ import { useContext, useEffect, useState } from 'react';
 import { Navigate } from 'react-router-dom';
 
 import { UserContext } from '@/context/UserContext';
-import DefaultLayout from '@/layouts/default';
 import GradientText from '@/components/GradientText';
 import RecipeCard from '@/components/RecipeCard';
 import { Recipe } from '@/types/recipe';
@@ -46,7 +45,7 @@ export default function FavoritesPage() {
   }
 
   return (
-    <DefaultLayout>
+    <>
       <h1 className="text-5xl text-center mb-6">
         <span>Favorite </span>
         <span className="capitalize">
@@ -63,6 +62,6 @@ export default function FavoritesPage() {
           />
         ))}
       </section>
-    </DefaultLayout>
+    </>
   );
 }
