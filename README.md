@@ -6,6 +6,8 @@ Dishcovery is a simple web app for browsing, searching, and discovering recipes.
 
 Here is a working live demo : [https://dishcovery-kmva.onrender.com](https://dishcovery-kmva.onrender.com)
 
+![app-mockup](https://raw.githubusercontent.com/Zetouny/Dishcovery/refs/heads/main/public/app-mockup.png?token=GHSAT0AAAAAAC44H4A7BKFAWOPKY35OLL7Y2DL5BPQ)
+
 ## Technologies Used
 
 - [Vite](https://vitejs.dev/guide/)
