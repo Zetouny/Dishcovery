@@ -95,7 +95,6 @@ Dishcovery/
 │   └── src/
 │       ├── App.tsx
 │       ├── main.tsx
-│       ├── vite-env.d.ts
 │       └── ... (other frontend files)
 └── server/
     ├── app.js
