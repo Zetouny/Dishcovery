@@ -122,7 +122,11 @@ export default function RecipePage() {
                 )}
               </Link>
             )}
-            <Image alt={recipe?.strMeal} src={`${recipe?.strMealThumb}`} />
+            <Image
+              alt={recipe?.strMeal}
+              loading="eager"
+              src={recipe?.strMealThumb}
+            />
           </div>
         </div>
 

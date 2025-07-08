@@ -59,11 +59,7 @@ export default function RecipeCard({
           </Link>
         </CardHeader>
       )}
-      <Image
-        alt={item?.strMeal}
-        loading="eager"
-        src={`${item?.strMealThumb}`}
-      />
+      <Image alt={item?.strMeal} loading="eager" src={item?.strMealThumb} />
       <CardFooter className="absolute bg-white/50 dark:bg-black/50 bottom-0 border-t-1 border-zinc-100/50 dark:border-zinc-600/50 z-10 justify-between">
         {random ? (
           <div>
