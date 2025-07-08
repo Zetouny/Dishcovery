@@ -1,10 +1,13 @@
+import { addToast, Button } from '@heroui/react';
 import { useState, useEffect } from 'react';
+import { useLocation, useNavigate } from 'react-router';
 
 export default function useFetch<T>(
   url: string,
   options?: RequestInit
 ): {
   data: T | any;
+  setData: React.Dispatch<React.SetStateAction<T | undefined>>;
   loading: boolean;
   error: string | null;
   refetch: () => Promise<void>;
@@ -12,6 +15,9 @@ export default function useFetch<T>(
   const [data, setData] = useState<T>();
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
+
+  const navigate = useNavigate();
+  const location = useLocation();
 
   async function fetchData() {
     setLoading(true);
@@ -25,8 +31,23 @@ export default function useFetch<T>(
       const data = await response.json();
 
       setData(data);
-    } catch (error: any) {
-      setError(error.message || 'Unknown error');
+    } catch (e: any) {
+      setError(e.message);
+      addToast({
+        title: 'Error',
+        description: e.message,
+        color: 'danger',
+        timeout: 10000,
+        endContent: (
+          <Button
+            size="sm"
+            variant="flat"
+            onPress={() => navigate(location.pathname)}
+          >
+            Reload
+          </Button>
+        )
+      });
     } finally {
       setLoading(false);
     }
@@ -36,5 +57,5 @@ export default function useFetch<T>(
     fetchData();
   }, [url]);
 
-  return { data, loading, error, refetch: fetchData };
+  return { data, setData, loading, error, refetch: fetchData };
 }

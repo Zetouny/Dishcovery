@@ -90,6 +90,7 @@ After building is complete, you can use created `dist` folder to deploy the app
 ```txt
 Dishcovery/
 ├── index.html
+├── cypress/
 ├── client/
 │   └── src/
 │       ├── App.tsx
@@ -123,6 +124,10 @@ The client folder contains the entire React frontend codebase, organized into co
 - `server/app.js`: Configures and initializes the Express.js server, sets up API routes, middleware, and static file serving.
 
   The server folder contains all backend code, including route handlers for users and favorites (see imports in app.js), database setup (MongoDB), and static asset delivery.
+
+### `cypress/` (E2E Testing)
+
+The cypress folder contains all end to end tests. Feel free to edit/add your own testing code.
 
 ---
 

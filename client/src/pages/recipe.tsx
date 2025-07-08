@@ -128,6 +128,7 @@ export default function RecipePage() {
                   <Image
                     alt={ingredient.name}
                     height={50}
+                    loading="eager"
                     src={`https://themealdb.com/images/ingredients/${ingredient.name.replaceAll(' ', '_')}.png`}
                     width={50}
                   />

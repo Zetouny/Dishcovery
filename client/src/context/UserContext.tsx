@@ -1,8 +1,9 @@
 import { createContext } from 'react';
+import { addToast } from '@heroui/react';
 
 import useFetch from '@/hooks/useFetch';
 import { User } from '@/types/user';
-import { UserContextType } from '@/types/useContext';
+import { UserContextType } from '@/types/userContext';
 
 const defaultUserContext: UserContextType = {
   user: null,
@@ -27,28 +28,61 @@ export default function UserProvider({
     refetch: refetchUser
   } = useFetch<User>('/api/users/auth', { credentials: 'include' });
 
-  const { data: favorites, refetch: refetchFavorites } = useFetch<string[]>(
-    '/api/favorites',
-    { credentials: 'include' }
-  );
+  const {
+    data: favorites,
+    setData: setFavorites,
+    refetch: refetchFavorites
+  } = useFetch<string[]>('/api/favorites', { credentials: 'include' });
 
   async function logOut() {
-    await fetch('/api/users/logout', {
-      method: 'POST',
-      credentials: 'include'
-    });
-    await refetchUser();
-    await refetchFavorites();
+    try {
+      const response = await fetch('/api/users/logout', {
+        method: 'POST',
+        credentials: 'include'
+      });
+
+      if (!response.ok) {
+        throw new Error("We couldn't log out, please try again!");
+      }
+
+      await refetchUser();
+      await refetchFavorites();
+    } catch (error: any) {
+      addToast({
+        title: 'Error',
+        description: error.message,
+        color: 'danger',
+        timeout: 10000
+      });
+    }
   }
 
   async function toggleFavorite(id: string) {
-    await fetch('/api/favorites', {
-      method: 'PUT',
-      credentials: 'include',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ favoriteId: id })
-    });
-    await refetchFavorites();
+    if (favorites.includes(id)) {
+      const newFavorites = favorites.filter((item: string) => item !== id);
+
+      setFavorites(newFavorites);
+    } else {
+      setFavorites([...favorites, id]);
+    }
+
+    try {
+      await fetch('/api/favorites', {
+        method: 'PUT',
+        credentials: 'include',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ favoriteId: id })
+      });
+    } catch (error: any) {
+      addToast({
+        title: 'Error',
+        description: error.message,
+        color: 'danger',
+        timeout: 10000
+      });
+    } finally {
+      await refetchFavorites();
+    }
   }
 
   return (
