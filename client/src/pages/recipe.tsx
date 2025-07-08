@@ -16,7 +16,7 @@ export default function RecipePage() {
 
   const navigate = useNavigate();
 
-  const { data, loading } = useFetch<Recipe>(
+  const { data } = useFetch<Recipe>(
     `https://themealdb.com/api/json/v1/1/lookup.php?i=${id}`
   );
 

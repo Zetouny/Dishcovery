@@ -25,7 +25,7 @@ export default function BrowsePage() {
     }
   }
 
-  const { data, loading } = useFetch<Recipe | null>(typeURL());
+  const { data } = useFetch<Recipe | null>(typeURL());
   const recipes = data?.meals ?? [];
 
   if (typeURL() === 'invalid' || data?.meals === null) {
@@ -45,7 +45,6 @@ export default function BrowsePage() {
           <RecipeCard
             key={item.idMeal}
             isFavorite={favorites?.includes(item.idMeal)}
-            isLoading={loading}
             item={item}
             random={false}
           />

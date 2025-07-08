@@ -10,14 +10,12 @@ interface RecipeCardProps {
   item: Recipe['meals'][number];
   random: boolean;
   isFavorite: boolean;
-  isLoading: boolean;
 }
 
 export default function RecipeCard({
   item,
   random,
   isFavorite,
-  isLoading,
   ...rest
 }: RecipeCardProps) {
   const navigate = useNavigate();

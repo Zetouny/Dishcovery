@@ -1,5 +1,6 @@
 import { useContext, useEffect, useState } from 'react';
 import { Navigate } from 'react-router-dom';
+import { addToast } from '@heroui/react';
 
 import { UserContext } from '@/context/UserContext';
 import GradientText from '@/components/GradientText';
@@ -39,7 +40,13 @@ export default function FavoritesPage() {
       const data = await Promise.all(fetchData);
 
       setFavoritesList(data);
-    } catch (error) {
+    } catch (error: any) {
+      addToast({
+        title: 'Error',
+        description: error.message,
+        color: 'danger',
+        timeout: 10000
+      });
       setFavoritesList([]);
     }
   }
