@@ -1,16 +1,22 @@
 import { useNavigate, useParams } from 'react-router-dom';
 import { Card, CardBody, Chip, Divider, Image, Link } from '@heroui/react';
+import { useContext } from 'react';
 
 import useFetch from '@/hooks/useFetch';
 import { Recipe } from '@/types/recipe';
 import GradientText from '@/components/GradientText';
 import PageNotFound from '@/components/PageNotFound';
+import { UserContext } from '@/context/UserContext';
+import { HeartFilledIcon } from '@/components/icons';
 
 export default function RecipePage() {
   const { id } = useParams();
+
+  const { user, favorites, toggleFavorite } = useContext(UserContext);
+
   const navigate = useNavigate();
 
-  const { data } = useFetch<Recipe>(
+  const { data, loading } = useFetch<Recipe>(
     `https://themealdb.com/api/json/v1/1/lookup.php?i=${id}`
   );
 
@@ -102,7 +108,20 @@ export default function RecipePage() {
             Recipe Image
           </h2>
           <Divider className="hidden md:block mt-3 mb-6" />
-          <div className="max-w-[80%] md:max-w-[100%]">
+          <div className="relative max-w-[80%] md:max-w-[100%]">
+            {user && (
+              <Link
+                className="absolute z-[20] top-3 left-3 cursor-pointer"
+                color="foreground"
+                onPress={() => toggleFavorite(recipe?.idMeal)}
+              >
+                {favorites?.includes(recipe?.idMeal) ? (
+                  <HeartFilledIcon isFavorite />
+                ) : (
+                  <HeartFilledIcon />
+                )}
+              </Link>
+            )}
             <Image alt={recipe?.strMeal} src={`${recipe?.strMealThumb}`} />
           </div>
         </div>
